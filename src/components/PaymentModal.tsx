@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { STOCKS } from '../utils/stockData';
+import { STRIPE_PAYMENT_LINK } from '../config/stripe';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -10,6 +11,9 @@ export const PaymentModal = ({ isOpen, onClose }: PaymentModalProps) => {
   const [selectedCategory, setSelectedCategory] = useState<'stocks' | 'crypto' | 'random'>('random');
   const [selectedStock, setSelectedStock] = useState<string>('RANDOM');
   const [tradeTerm, setTradeTerm] = useState<'Short-term' | 'Long-term' | 'Random'>('Random');
+  
+  const stripePaymentLink = STRIPE_PAYMENT_LINK;
+  const isPaymentDisabled = !stripePaymentLink;
 
   if (!isOpen) return null;
 
@@ -26,11 +30,7 @@ export const PaymentModal = ({ isOpen, onClose }: PaymentModalProps) => {
       });
 
   const handlePayment = () => {
-    const stripePaymentLink = import.meta.env.VITE_STRIPE_PAYMENT_LINK;
-    
     if (!stripePaymentLink) {
-      console.error('Stripe Payment Link is not configured. Please add VITE_STRIPE_PAYMENT_LINK to your .env file.');
-      alert('Payment system is not configured. Please contact support.');
       return;
     }
 
@@ -204,9 +204,15 @@ export const PaymentModal = ({ isOpen, onClose }: PaymentModalProps) => {
 
         <button
           onClick={handlePayment}
-          className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-3"
+          disabled={isPaymentDisabled}
+          className={`w-full font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg transition-all duration-300 flex items-center justify-center gap-3 ${
+            isPaymentDisabled
+              ? 'bg-gray-600 text-gray-400 cursor-not-allowed opacity-50'
+              : 'bg-gradient-to-r from-amber-500 to-amber-600 text-white hover:from-amber-600 hover:to-amber-700 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 cursor-pointer'
+          }`}
+          aria-disabled={isPaymentDisabled}
         >
-          <span>Pay $5 USD</span>
+          <span>{isPaymentDisabled ? 'Payment Unavailable' : 'Pay $5 USD'}</span>
         </button>
 
         <p className="text-xs text-gray-500 text-center mt-4 italic font-light">
