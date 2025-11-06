@@ -1,22 +1,15 @@
 import { useState } from 'react';
 import { STOCKS } from '../utils/stockData';
-import { Skeleton } from './Skeleton';
 
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onPaymentSuccess: (
-    tradeTerm: 'Short-term' | 'Long-term' | 'Random',
-    category?: 'stocks' | 'crypto' | 'random',
-    selectedStock?: string
-  ) => void;
 }
 
-export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModalProps) => {
+export const PaymentModal = ({ isOpen, onClose }: PaymentModalProps) => {
   const [selectedCategory, setSelectedCategory] = useState<'stocks' | 'crypto' | 'random'>('random');
   const [selectedStock, setSelectedStock] = useState<string>('RANDOM');
   const [tradeTerm, setTradeTerm] = useState<'Short-term' | 'Long-term' | 'Random'>('Random');
-  const [isProcessing, setIsProcessing] = useState(false);
 
   if (!isOpen) return null;
 
@@ -32,17 +25,46 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
         return true;
       });
 
-  const handlePayment = async () => {
-    setIsProcessing(true);
+  const handlePayment = () => {
+    const stripePaymentLink = import.meta.env.VITE_STRIPE_PAYMENT_LINK;
     
-    // Simulate payment processing with timeout
-    await new Promise(resolve => setTimeout(resolve, 2500));
-    
-    setIsProcessing(false);
+    if (!stripePaymentLink) {
+      console.error('Stripe Payment Link is not configured. Please add VITE_STRIPE_PAYMENT_LINK to your .env file.');
+      alert('Payment system is not configured. Please contact support.');
+      return;
+    }
+
+    // Clear any old payment data before starting new payment
+    localStorage.removeItem('paymentSelections');
+    sessionStorage.removeItem('paymentSelections');
+
+    // Store user selections in localStorage before redirecting (more persistent than sessionStorage)
     const stockSymbol = selectedStock === 'RANDOM' ? undefined : selectedStock;
     const category = selectedCategory === 'random' ? undefined : selectedCategory;
-    onPaymentSuccess(tradeTerm, category, stockSymbol);
-    onClose();
+    
+    const selections = {
+      tradeTerm,
+      category,
+      selectedStock: stockSymbol,
+      timestamp: Date.now() // Add timestamp to expire old selections
+    };
+    
+    localStorage.setItem('paymentSelections', JSON.stringify(selections));
+    // Also store in sessionStorage as backup
+    sessionStorage.setItem('paymentSelections', JSON.stringify(selections));
+
+    // Build the Stripe Payment Link URL with success and cancel URLs
+    const currentUrl = window.location.origin;
+    const successUrl = `${currentUrl}/?payment=success&session_id={CHECKOUT_SESSION_ID}`;
+    const cancelUrl = `${currentUrl}/?payment=cancelled`;
+    
+    // Append success and cancel URLs to the payment link
+    const paymentUrl = new URL(stripePaymentLink);
+    paymentUrl.searchParams.set('success_url', successUrl);
+    paymentUrl.searchParams.set('cancel_url', cancelUrl);
+    
+    // Redirect to Stripe Payment Link
+    window.location.href = paymentUrl.toString();
   };
 
   return (
@@ -50,7 +72,7 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
       onClick={(e) => {
         // Close if clicking on the backdrop (not the modal content)
-        if (e.target === e.currentTarget && !isProcessing) {
+        if (e.target === e.currentTarget) {
           onClose();
         }
       }}
@@ -86,7 +108,6 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
             <button
               type="button"
               onClick={() => setTradeTerm('Random')}
-              disabled={isProcessing}
               className={`px-2 py-2 md:px-4 md:py-3 rounded-xl font-semibold transition-all duration-300 border text-xs md:text-sm cursor-pointer ${
                 tradeTerm === 'Random'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white border-amber-500/50 shadow-lg shadow-amber-500/20'
@@ -98,7 +119,6 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
             <button
               type="button"
               onClick={() => setTradeTerm('Short-term')}
-              disabled={isProcessing}
               className={`px-2 py-2 md:px-4 md:py-3 rounded-xl font-semibold transition-all duration-300 border text-xs md:text-sm cursor-pointer ${
                 tradeTerm === 'Short-term'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white border-amber-500/50 shadow-lg shadow-amber-500/20'
@@ -110,7 +130,6 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
             <button
               type="button"
               onClick={() => setTradeTerm('Long-term')}
-              disabled={isProcessing}
               className={`px-2 py-2 md:px-4 md:py-3 rounded-xl font-semibold transition-all duration-300 border text-xs md:text-sm cursor-pointer ${
                 tradeTerm === 'Long-term'
                   ? 'bg-gradient-to-r from-amber-500 to-amber-600 text-white border-amber-500/50 shadow-lg shadow-amber-500/20'
@@ -132,8 +151,7 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
               setSelectedCategory(e.target.value as 'stocks' | 'crypto' | 'random');
               setSelectedStock('RANDOM'); // Reset stock selection when category changes
             }}
-            disabled={isProcessing}
-            className="w-full bg-slate-800/80 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-800/80 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all"
           >
             <option value="random" className="bg-slate-800">🎲 Random (All)</option>
             <option value="stocks" className="bg-slate-800">📈 Stocks Only</option>
@@ -148,8 +166,7 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
           <select
             value={selectedStock}
             onChange={(e) => setSelectedStock(e.target.value)}
-            disabled={isProcessing}
-            className="w-full bg-slate-800/80 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-full bg-slate-800/80 border border-slate-700/50 rounded-xl px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-500/50 transition-all"
           >
             <option value="RANDOM" className="bg-slate-800">
               🎲 Random (Recommended)
@@ -185,29 +202,15 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
           </div>
         </div>
 
-        {isProcessing ? (
-          <div className="space-y-3">
-            <Skeleton height={56} className="w-full rounded-xl" />
-            <div className="flex items-center justify-center gap-3 text-gray-400">
-              <svg className="animate-spin h-5 w-5 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              <span className="text-sm">Processing Payment...</span>
-            </div>
-          </div>
-        ) : (
-          <button
-            onClick={handlePayment}
-            disabled={isProcessing}
-            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-3"
-          >
-            <span>Pay $5 USD</span>
-          </button>
-        )}
+        <button
+          onClick={handlePayment}
+          className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 cursor-pointer flex items-center justify-center gap-3"
+        >
+          <span>Pay $5 USD</span>
+        </button>
 
         <p className="text-xs text-gray-500 text-center mt-4 italic font-light">
-          Payment is simulated for demonstration purposes
+          You will be redirected to Stripe to complete your payment
         </p>
       </div>
     </div>
