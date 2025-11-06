@@ -1,4 +1,5 @@
-import { Stock, getRandomStock, getStockBySymbol, STOCKS } from './stockData';
+import type { Stock } from './stockData';
+import { getRandomStock, getStockBySymbol, STOCKS } from './stockData';
 
 export interface TradingAdvice {
   stock: Stock;
@@ -49,6 +50,13 @@ export const generateAdvice = (
   if (selectedStockSymbol) {
     stock = getStockBySymbol(selectedStockSymbol) || getRandomStock();
     isStockRandom = !getStockBySymbol(selectedStockSymbol);
+    // When a specific stock is selected, category is not relevant, but we need to set it
+    // We'll determine it based on whether a category was specified
+    if (selectedCategory === 'stocks' || selectedCategory === 'crypto') {
+      isCategoryRandom = false;
+    } else {
+      isCategoryRandom = true;
+    }
   } else {
     isStockRandom = true;
     // Filter by category if specified
