@@ -1,13 +1,17 @@
-import { useState, useEffect } from 'react';
-import { Hero } from './components/Hero';
-import { HowItWorks } from './components/HowItWorks';
-import { Pricing } from './components/Pricing';
-import { Testimonials } from './components/Testimonials';
-import { Footer } from './components/Footer';
+import { useState, useEffect, Suspense, lazy } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Home } from './pages/Home';
 import { PaymentModal } from './components/PaymentModal';
 import { AdviceModal } from './components/AdviceModal';
+import { CookieBanner } from './components/CookieBanner';
+import { Skeleton } from './components/Skeleton';
 import { generateAdvice } from './utils/generateAdvice';
 import type { TradingAdvice } from './utils/generateAdvice';
+
+// Lazy load legal pages
+const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = lazy(() => import('./pages/TermsOfService'));
+const Disclaimer = lazy(() => import('./pages/Disclaimer'));
 
 export const App = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
@@ -53,25 +57,56 @@ export const App = () => {
   };
 
   return (
-    <div className="min-h-screen">
-      <Hero onGetAdvice={handleOpenPaymentModal} />
-      <HowItWorks />
-      <Pricing onGetAdvice={handleOpenPaymentModal} />
-      <Testimonials />
-      <Footer />
+    <BrowserRouter>
+      <div className="min-h-screen">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Home onGetAdvice={handleOpenPaymentModal} />
+            }
+          />
+          <Route
+            path="/privacy"
+            element={
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Skeleton width={200} height={200} /></div>}>
+                <PrivacyPolicy />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/terms"
+            element={
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Skeleton width={200} height={200} /></div>}>
+                <TermsOfService />
+              </Suspense>
+            }
+          />
+          <Route
+            path="/disclaimer"
+            element={
+              <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><Skeleton width={200} height={200} /></div>}>
+                <Disclaimer />
+              </Suspense>
+            }
+          />
+        </Routes>
 
-      <PaymentModal
-        isOpen={isPaymentModalOpen}
-        onClose={handleClosePaymentModal}
-        onPaymentSuccess={handlePaymentSuccess}
-      />
+        <PaymentModal
+          isOpen={isPaymentModalOpen}
+          onClose={handleClosePaymentModal}
+          onPaymentSuccess={handlePaymentSuccess}
+        />
 
-      <AdviceModal
-        isOpen={isAdviceModalOpen}
-        onClose={handleCloseAdviceModal}
-        advice={generatedAdvice}
-      />
-    </div>
+        <AdviceModal
+          isOpen={isAdviceModalOpen}
+          onClose={handleCloseAdviceModal}
+          advice={generatedAdvice}
+        />
+
+        <CookieBanner />
+      </div>
+    </BrowserRouter>
   );
 };
 

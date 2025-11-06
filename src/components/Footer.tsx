@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const Footer = () => {
   return (
     <footer className="relative bg-black border-t border-slate-800 text-gray-400 py-16 px-4">
@@ -13,11 +15,24 @@ export const Footer = () => {
             </p>
           </div>
           <div>
-            <h3 className="text-white font-bold text-xl mb-6">Disclaimer</h3>
-            <p className="text-sm text-gray-500 leading-relaxed font-light">
-              Our advice is completely random and for entertainment purposes only. 
-              Trading involves risk. Past randomness does not guarantee future randomness.
-            </p>
+            <h3 className="text-white font-bold text-xl mb-6">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <Link to="/privacy" className="text-sm text-gray-500 hover:text-amber-400 transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link to="/terms" className="text-sm text-gray-500 hover:text-amber-400 transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li>
+                <Link to="/disclaimer" className="text-sm text-gray-500 hover:text-amber-400 transition-colors">
+                  Disclaimer
+                </Link>
+              </li>
+            </ul>
           </div>
           <div>
             <h3 className="text-white font-bold text-xl mb-6">Contact</h3>

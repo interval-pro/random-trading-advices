@@ -1,3 +1,5 @@
+import { AnimatedSection } from './AnimatedSection';
+
 interface PricingProps {
   onGetAdvice: () => void;
 }
@@ -7,12 +9,14 @@ export const Pricing = ({ onGetAdvice }: PricingProps) => {
   return (
     <>
       <section className="relative py-32 px-4 bg-gradient-to-b from-slate-950 via-black to-slate-950 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(120,119,198,0.1),transparent_50%)]"></div>
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(120,119,198,0.1),transparent_50%)] parallax-bg"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] parallax-bg"></div>
         <div className="relative max-w-5xl mx-auto text-center z-10">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-            Get Your Random Trading Advice
-          </h2>
+          <AnimatedSection animation="fade-slide">
+            <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+              Get Your Random Trading Advice
+            </h2>
+          </AnimatedSection>
           <p className="text-xl md:text-2xl mb-12 text-gray-300 font-light max-w-3xl mx-auto">
             Receive one completely random trading recommendation for just{' '}
             <span className="text-5xl md:text-2xl font-bold text-amber-400">$5 USD</span>
@@ -67,14 +71,16 @@ export const Pricing = ({ onGetAdvice }: PricingProps) => {
             </div>
           </div>
 
-          <div className="mb-16">
-            <button
-              onClick={onGetAdvice}
-              className="bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-6 px-12 rounded-xl text-2xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 uppercase tracking-wide cursor-pointer"
-            >
-              GET ADVICE NOW
-            </button>
-          </div>
+          <AnimatedSection animation="fade-slide" delay={200}>
+            <div className="mb-16">
+              <button
+                onClick={onGetAdvice}
+                className="bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-6 px-12 rounded-xl text-2xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 hover:scale-105 active:scale-95 uppercase tracking-wide cursor-pointer"
+              >
+                GET ADVICE NOW
+              </button>
+            </div>
+          </AnimatedSection>
 
           <div className="relative bg-gradient-to-br from-slate-800/60 via-slate-800/40 to-slate-900/60 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 shadow-xl shadow-black/40 max-w-3xl mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5 rounded-2xl"></div>

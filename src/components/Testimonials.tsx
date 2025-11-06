@@ -1,3 +1,5 @@
+import { AnimatedSection } from './AnimatedSection';
+
 export const Testimonials = () => {
   const testimonials = [
     {
@@ -22,23 +24,26 @@ export const Testimonials = () => {
 
   return (
     <section className="relative py-32 px-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+      <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808008_1px,transparent_1px),linear-gradient(to_bottom,#80808008_1px,transparent_1px)] bg-[size:24px_24px] parallax-bg"></div>
       <div className="relative max-w-7xl mx-auto z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
-            What Our Customers Say
-          </h2>
-          <p className="text-center text-gray-400 mb-4 text-lg font-light">
-            Real testimonials from people who appreciate honest randomness
-          </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto"></div>
-        </div>
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="group relative bg-gradient-to-br from-slate-800/90 via-slate-800/70 to-slate-900/90 p-10 rounded-2xl border border-slate-700/50 backdrop-blur-xl shadow-2xl shadow-black/40 hover:border-amber-500/30 transition-all duration-300 hover:shadow-amber-500/10 hover:-translate-y-1"
-            >
+        <AnimatedSection animation="fade-slide">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
+              What Our Customers Say
+            </h2>
+            <p className="text-center text-gray-400 mb-4 text-lg font-light">
+              Real testimonials from people who appreciate honest randomness
+            </p>
+            <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto"></div>
+          </div>
+        </AnimatedSection>
+        <AnimatedSection animation="fade-slide" delay={100}>
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="group relative bg-gradient-to-br from-slate-800/90 via-slate-800/70 to-slate-900/90 p-10 rounded-2xl border border-slate-700/50 backdrop-blur-xl shadow-2xl shadow-black/40 hover:border-amber-500/30 transition-all duration-300 hover:shadow-amber-500/10 hover:-translate-y-1 hover:scale-105"
+              >
               <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
               <div className="relative">
                 <div className="flex items-center gap-1 mb-6">
@@ -61,13 +66,16 @@ export const Testimonials = () => {
                   <p className="text-sm text-gray-400 font-light">{testimonial.role}</p>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+              </div>
+            ))}
+          </div>
+        </AnimatedSection>
         
-        <p className="text-center text-gray-400 text-lg font-light mt-8">
-          ... and thousands more satisfied clients
-        </p>
+        <AnimatedSection animation="fade-in" delay={300}>
+          <p className="text-center text-gray-400 text-lg font-light mt-8">
+            ... and thousands more satisfied clients
+          </p>
+        </AnimatedSection>
       </div>
     </section>
   );

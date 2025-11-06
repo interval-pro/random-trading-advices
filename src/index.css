@@ -49,3 +49,45 @@
   background: linear-gradient(to bottom, rgb(100, 116, 139), rgb(71, 85, 105));
 }
 
+/* Shimmer animation for skeleton loading */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.animate-\[shimmer_2s_infinite\] {
+  background: linear-gradient(
+    to right,
+    rgba(51, 65, 85, 0.5) 0%,
+    rgba(71, 85, 105, 0.5) 50%,
+    rgba(51, 65, 85, 0.5) 100%
+  );
+  background-size: 1000px 100%;
+  animation: shimmer 2s infinite;
+}
+
+/* Parallax effect for background elements */
+.parallax-bg {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .parallax-bg {
+    animation: parallax 20s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes parallax {
+  0% {
+    transform: translateY(0) translateX(0);
+  }
+  100% {
+    transform: translateY(-10px) translateX(-5px);
+  }
+}
+

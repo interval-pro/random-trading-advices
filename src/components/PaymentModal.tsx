@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { STOCKS } from '../utils/stockData';
+import { Skeleton } from './Skeleton';
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -184,23 +185,26 @@ export const PaymentModal = ({ isOpen, onClose, onPaymentSuccess }: PaymentModal
           </div>
         </div>
 
-        <button
-          onClick={handlePayment}
-          disabled={isProcessing}
-          className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-3"
-        >
-          {isProcessing ? (
-            <>
-              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        {isProcessing ? (
+          <div className="space-y-3">
+            <Skeleton height={56} className="w-full rounded-xl" />
+            <div className="flex items-center justify-center gap-3 text-gray-400">
+              <svg className="animate-spin h-5 w-5 text-amber-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
-              <span>Processing Payment...</span>
-            </>
-          ) : (
+              <span className="text-sm">Processing Payment...</span>
+            </div>
+          </div>
+        ) : (
+          <button
+            onClick={handlePayment}
+            disabled={isProcessing}
+            className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-3 md:py-4 px-6 md:px-8 rounded-xl text-base md:text-lg hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer flex items-center justify-center gap-3"
+          >
             <span>Pay $5 USD</span>
-          )}
-        </button>
+          </button>
+        )}
 
         <p className="text-xs text-gray-500 text-center mt-4 italic font-light">
           Payment is simulated for demonstration purposes
