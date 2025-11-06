@@ -66,7 +66,7 @@ export const AdviceModal = ({ isOpen, onClose, advice }: AdviceModalProps) => {
       ctx.fillText(advice.stock.symbol, stockSymbolX, stockY);
       
       // Action Badge (to the right of stock symbol)
-      const actionX = leftPadding + 250;
+      const actionX = canvas.width - 220;
       const actionY = stockY - 50;
       const actionWidth = 180;
       const actionHeight = 80;
@@ -85,7 +85,7 @@ export const AdviceModal = ({ isOpen, onClose, advice }: AdviceModalProps) => {
       ctx.fillStyle = '#ffffff';
       ctx.font = 'bold 40px Arial';
       ctx.textAlign = 'center';
-      ctx.fillText(advice.action, actionX + actionWidth / 2, actionY + 50);
+      ctx.fillText(advice.action, actionX + actionWidth / 2, actionY + 55);
       
       // Stock Name (below stock symbol)
       ctx.fillStyle = '#9ca3af';

@@ -18,12 +18,6 @@ export const Testimonials = () => {
       quote: 'I love the transparency. They tell you upfront it\'s random, unlike those expensive courses that promise secrets but deliver the same 50/50 odds.',
       rating: 5,
     },
-    {
-      name: 'Michael T.',
-      role: 'Experienced Trader',
-      quote: 'After 10 years of trading, I realized the market is random. This service saved me hours of "analysis" and gave me the same results. Brilliant.',
-      rating: 5,
-    },
   ];
 
   return (
@@ -39,7 +33,7 @@ export const Testimonials = () => {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto"></div>
         </div>
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
@@ -70,6 +64,10 @@ export const Testimonials = () => {
             </div>
           ))}
         </div>
+        
+        <p className="text-center text-gray-400 text-lg font-light mt-8">
+          ... and thousands more satisfied clients
+        </p>
       </div>
     </section>
   );

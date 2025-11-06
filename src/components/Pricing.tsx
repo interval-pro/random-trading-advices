@@ -13,58 +13,69 @@ export const Pricing = ({ onGetAdvice }: PricingProps) => {
           <h2 className="text-5xl md:text-6xl font-extrabold mb-6 bg-gradient-to-r from-white via-gray-200 to-gray-400 bg-clip-text text-transparent">
             Get Your Random Trading Advice
           </h2>
-          <p className="text-xl mb-16 text-gray-300 font-light">
-            Receive one completely random trading recommendation for just <span className="text-4xl font-bold text-amber-400">$5 USD</span>
+          <p className="text-xl md:text-2xl mb-12 text-gray-300 font-light max-w-3xl mx-auto">
+            Receive one completely random trading recommendation for just{' '}
+            <span className="text-5xl md:text-2xl font-bold text-amber-400">$5 USD</span>
           </p>
-          <div className="relative bg-gradient-to-br from-slate-800/90 via-slate-800/70 to-slate-900/90 backdrop-blur-xl rounded-3xl p-10 mb-12 border border-slate-700/50 shadow-2xl shadow-black/50 max-w-lg mx-auto">
-            <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 via-transparent to-amber-500/5 rounded-3xl"></div>
-            <div className="relative">
-              <div className="text-center mb-8">
-                <div className="text-7xl font-extrabold mb-2 bg-gradient-to-r from-amber-400 to-amber-600 bg-clip-text text-transparent">$5</div>
-                <p className="text-gray-400 text-sm font-light">One-time payment</p>
-              </div>
-              <div className="space-y-4 mb-10 text-left">
-                <div className="flex items-center gap-4">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-200">One random stock recommendation</span>
+          
+          <div className="mb-16">
+            <div className="grid md:grid-cols-2 gap-6 mb-12 max-w-4xl mx-auto">
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
                 </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-200">BUY or SELL action (randomly selected)</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-200">Certified RNG guarantee</span>
-                </div>
-                <div className="flex items-center gap-4">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
-                  </div>
-                  <span className="text-gray-200">No analysis, no stress, no false promises</span>
+                <div className="text-left">
+                  <p className="text-gray-200 text-lg font-medium">One random stock recommendation</p>
+                  <p className="text-gray-400 text-sm font-light mt-1">Stocks or crypto, randomly selected</p>
                 </div>
               </div>
-              <button
-                onClick={onGetAdvice}
-                className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-5 px-8 rounded-xl text-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 uppercase tracking-wide cursor-pointer"
-              >
-                GET ADVICE
-              </button>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <p className="text-gray-200 text-lg font-medium">BUY or SELL action</p>
+                  <p className="text-gray-400 text-sm font-light mt-1">Randomly generated, 50/50 chance</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <p className="text-gray-200 text-lg font-medium">Certified RNG guarantee</p>
+                  <p className="text-gray-400 text-sm font-light mt-1">100% random, verified system</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center flex-shrink-0 shadow-lg shadow-amber-500/20">
+                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="text-left">
+                  <p className="text-gray-200 text-lg font-medium">No analysis, no stress</p>
+                  <p className="text-gray-400 text-sm font-light mt-1">No false promises, just honesty</p>
+                </div>
+              </div>
             </div>
           </div>
+
+          <div className="mb-16">
+            <button
+              onClick={onGetAdvice}
+              className="bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-6 px-12 rounded-xl text-2xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 uppercase tracking-wide cursor-pointer"
+            >
+              GET ADVICE NOW
+            </button>
+          </div>
+
           <div className="relative bg-gradient-to-br from-slate-800/60 via-slate-800/40 to-slate-900/60 backdrop-blur-xl rounded-2xl p-8 border border-slate-700/50 shadow-xl shadow-black/40 max-w-3xl mx-auto">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5 rounded-2xl"></div>
             <p className="relative text-xl font-semibold mb-3 text-white">Our Guarantee</p>

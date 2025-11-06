@@ -1,7 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Hero } from './components/Hero';
 import { HowItWorks } from './components/HowItWorks';
-import { DemoPreview } from './components/DemoPreview';
 import { Pricing } from './components/Pricing';
 import { Testimonials } from './components/Testimonials';
 import { Footer } from './components/Footer';
@@ -14,6 +13,20 @@ export const App = () => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isAdviceModalOpen, setIsAdviceModalOpen] = useState(false);
   const [generatedAdvice, setGeneratedAdvice] = useState<TradingAdvice | null>(null);
+
+  // Prevent body scroll when modals are open
+  useEffect(() => {
+    if (isPaymentModalOpen || isAdviceModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+
+    // Cleanup function to restore scroll when component unmounts
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isPaymentModalOpen, isAdviceModalOpen]);
 
   const handleOpenPaymentModal = () => {
     setIsPaymentModalOpen(true);
@@ -43,7 +56,6 @@ export const App = () => {
     <div className="min-h-screen">
       <Hero onGetAdvice={handleOpenPaymentModal} />
       <HowItWorks />
-      <DemoPreview />
       <Pricing onGetAdvice={handleOpenPaymentModal} />
       <Testimonials />
       <Footer />

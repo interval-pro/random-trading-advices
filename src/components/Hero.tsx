@@ -26,7 +26,7 @@ export const Hero = ({ onGetAdvice }: HeroProps) => {
           onClick={onGetAdvice}
           className="mb-12 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-bold py-5 px-10 rounded-xl text-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-2xl shadow-amber-500/30 hover:shadow-amber-500/50 hover:-translate-y-0.5 uppercase tracking-wide cursor-pointer"
         >
-          GET ADVICE
+          GET ADVICE NOW
         </button>
         <div className="relative bg-gradient-to-br from-slate-800/50 via-slate-800/30 to-slate-900/50 backdrop-blur-xl rounded-2xl p-8 mb-12 border border-slate-700/50 shadow-2xl shadow-black/50">
           <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-transparent to-amber-500/5 rounded-2xl"></div>

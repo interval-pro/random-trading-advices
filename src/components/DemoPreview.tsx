@@ -1,11 +1,4 @@
 export const DemoPreview = () => {
-  const examples = [
-    { symbol: 'AAPL', action: 'BUY', time: '2024-11-06 10:23 AM' },
-    { symbol: 'TSLA', action: 'SELL', time: '2024-11-06 09:15 AM' },
-    { symbol: 'MSFT', action: 'BUY', time: '2024-11-06 08:42 AM' },
-    { symbol: 'GOOGL', action: 'SELL', time: '2024-11-05 3:55 PM' },
-    { symbol: 'AMZN', action: 'BUY', time: '2024-11-05 2:18 PM' },
-  ];
 
   return (
     <section className="relative py-32 px-4 bg-gradient-to-b from-slate-950 via-black to-slate-950">
@@ -21,40 +14,19 @@ export const DemoPreview = () => {
           </p>
           <div className="w-24 h-1 bg-gradient-to-r from-transparent via-amber-500 to-transparent mx-auto"></div>
         </div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {examples.map((example, index) => (
-            <div
-              key={index}
-              className="group relative bg-gradient-to-br from-slate-800/90 via-slate-800/70 to-slate-900/90 p-8 rounded-2xl border border-slate-700/50 backdrop-blur-xl shadow-2xl shadow-black/40 hover:border-amber-500/30 transition-all duration-300 hover:shadow-amber-500/10 hover:-translate-y-1"
-            >
-              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative">
-                <div className="flex items-center justify-between mb-6">
-                  <span className="text-3xl font-bold text-white tracking-tight">{example.symbol}</span>
-                  <span
-                    className={`px-4 py-2 rounded-lg text-sm font-bold shadow-lg ${
-                      example.action === 'BUY'
-                        ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white border border-emerald-400/30'
-                        : 'bg-gradient-to-br from-red-500 to-red-600 text-white border border-red-400/30'
-                    }`}
-                  >
-                    {example.action}
-                  </span>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-400 mb-6">
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <span>Generated: {example.time}</span>
-                </div>
-                <div className="pt-6 border-t border-slate-700/50">
-                  <p className="text-xs text-gray-500 italic font-light">
-                    Randomly generated - no analysis performed
-                  </p>
-                </div>
-              </div>
+        
+        {/* Actions Collage Image */}
+        <div className="mb-16">
+          <div className="flex items-center justify-center">
+            <div className="group relative overflow-hidden rounded-2xl border border-slate-700/50 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-xl shadow-2xl shadow-black/40 hover:border-amber-500/30 transition-all duration-300 hover:shadow-amber-500/10 hover:-translate-y-1 max-w-5xl w-full">
+              <div className="absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <img 
+                src="/actions.png" 
+                alt="How it works - Actions collage" 
+                className="w-full h-auto object-cover"
+              />
             </div>
-          ))}
+          </div>
         </div>
         <div className="text-center">
           <p className="text-gray-400 italic font-light max-w-2xl mx-auto">
