@@ -183,6 +183,11 @@ const AppContent = () => {
     setPaymentError(null);
   };
 
+  const handleDirectAdviceGeneration = (advice: TradingAdvice) => {
+    setGeneratedAdvice(advice);
+    setIsAdviceModalOpen(true);
+  };
+
   return (
     <div className="min-h-screen">
       <Routes>
@@ -221,12 +226,14 @@ const AppContent = () => {
       <PaymentModal
         isOpen={isPaymentModalOpen}
         onClose={handleClosePaymentModal}
+        onGenerateAdvice={handleDirectAdviceGeneration}
       />
 
       <AdviceModal
         isOpen={isAdviceModalOpen}
         onClose={handleCloseAdviceModal}
         advice={generatedAdvice}
+        onGetAnotherAdvice={handleOpenPaymentModal}
       />
 
       {/* Payment Error Modal */}

@@ -7,10 +7,12 @@ interface AdviceModalProps {
   isOpen: boolean;
   onClose: () => void;
   advice: TradingAdvice | null;
+  onGetAnotherAdvice: () => void;
 }
 
-export const AdviceModal = ({ isOpen, onClose, advice }: AdviceModalProps) => {
+export const AdviceModal = ({ isOpen, onClose, advice, onGetAnotherAdvice }: AdviceModalProps) => {
   const [showConfirmExit, setShowConfirmExit] = useState(false);
+  const [showConfirmAnother, setShowConfirmAnother] = useState(false);
 
   useEffect(() => {
     if (isOpen && advice) {
@@ -58,6 +60,20 @@ export const AdviceModal = ({ isOpen, onClose, advice }: AdviceModalProps) => {
 
   const handleCancelExit = () => {
     setShowConfirmExit(false);
+  };
+
+  const handleGetAnotherClick = () => {
+    setShowConfirmAnother(true);
+  };
+
+  const handleConfirmAnother = () => {
+    setShowConfirmAnother(false);
+    onClose();
+    onGetAnotherAdvice();
+  };
+
+  const handleCancelAnother = () => {
+    setShowConfirmAnother(false);
   };
 
   const generateAdviceImage = async (): Promise<Blob> => {
@@ -246,12 +262,6 @@ export const AdviceModal = ({ isOpen, onClose, advice }: AdviceModalProps) => {
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
-      onClick={(e) => {
-        // Close if clicking on the backdrop (not the modal content)
-        if (e.target === e.currentTarget) {
-          handleCloseClick();
-        }
-      }}
     >
       <div 
         className="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 p-4 md:p-8 lg:p-10 max-w-sm md:max-w-2xl lg:max-w-3xl w-full max-h-[calc(100vh-2rem)] overflow-y-auto modal-scroll border border-slate-700/50 shadow-2xl shadow-black/60 my-auto"
@@ -340,24 +350,35 @@ export const AdviceModal = ({ isOpen, onClose, advice }: AdviceModalProps) => {
           </div>
         </div>
 
-        <div className="flex gap-2 md:gap-3 mb-3 md:mb-4">
+        <div className="flex flex-col gap-2 md:gap-3 mb-3 md:mb-4">
+          <div className="flex gap-2 md:gap-3">
+            <button
+              onClick={handleSave}
+              className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold py-2.5 md:py-3 px-4 md:px-6 rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              </svg>
+              <span className="text-xs md:text-sm">Save</span>
+            </button>
+            <button
+              onClick={handleShare}
+              className="flex-1 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold py-2.5 md:py-3 px-4 md:px-6 rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-300 shadow-lg shadow-slate-600/30 flex items-center justify-center gap-2 cursor-pointer"
+            >
+              <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+              </svg>
+              <span className="text-xs md:text-sm">Share</span>
+            </button>
+          </div>
           <button
-            onClick={handleSave}
-            className="flex-1 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-semibold py-2.5 md:py-3 px-4 md:px-6 rounded-xl hover:from-amber-600 hover:to-amber-700 transition-all duration-300 shadow-lg shadow-amber-500/30 flex items-center justify-center gap-2 cursor-pointer"
+            onClick={handleGetAnotherClick}
+            className="w-full bg-gradient-to-r from-green-500 to-emerald-600 text-white font-semibold py-2.5 md:py-3 px-4 md:px-6 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all duration-300 shadow-lg shadow-green-500/30 flex items-center justify-center gap-2 cursor-pointer"
           >
             <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-3m-1 4l-3 3m0 0l-3-3m3 3V4" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
-            <span className="text-xs md:text-sm">Save</span>
-          </button>
-          <button
-            onClick={handleShare}
-            className="flex-1 bg-gradient-to-r from-slate-600 to-slate-700 text-white font-semibold py-2.5 md:py-3 px-4 md:px-6 rounded-xl hover:from-slate-700 hover:to-slate-800 transition-all duration-300 shadow-lg shadow-slate-600/30 flex items-center justify-center gap-2 cursor-pointer"
-          >
-            <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
-            </svg>
-            <span className="text-xs md:text-sm">Share</span>
+            <span className="text-xs md:text-sm">Get Another Advice</span>
           </button>
         </div>
 
@@ -373,6 +394,16 @@ export const AdviceModal = ({ isOpen, onClose, advice }: AdviceModalProps) => {
         isOpen={showConfirmExit}
         onConfirm={handleConfirmExit}
         onCancel={handleCancelExit}
+      />
+
+      <ConfirmExitModal
+        isOpen={showConfirmAnother}
+        onConfirm={handleConfirmAnother}
+        onCancel={handleCancelAnother}
+        title="Get Another Advice?"
+        message="Are you sure you want to get another advice? You will lose the current advice information if not saved."
+        confirmText="Get Another"
+        confirmButtonClass="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 shadow-lg shadow-green-500/30"
       />
     </div>
   );
