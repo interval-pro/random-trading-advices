@@ -12,8 +12,8 @@ export interface DiscountConfig {
 
 // Stripe Payment Links
 // You can add test/prod variants similar to stripe.ts if needed
-const STRIPE_PAYMENT_LINK_XMAS50_TEST = 'https://buy.stripe.com/test_5kQ28kgag0F5beC11FcV200'; // Replace with actual XMAS50 test link
-const STRIPE_PAYMENT_LINK_XMAS50_PROD = 'https://buy.stripe.com/aFafZaaPWevV6Ym25JcV201'; // Replace with actual XMAS50 prod link
+const STRIPE_PAYMENT_LINK_XMAS50_TEST = 'https://buy.stripe.com/test_14AfZg2He7j76cN56iffy01'; // Replace with actual XMAS50 test link
+const STRIPE_PAYMENT_LINK_XMAS50_PROD = 'https://buy.stripe.com/14AfZg2He7j76cN56iffy01'; // Replace with actual XMAS50 prod link
 
 const STRIPE_PAYMENT_LINK_XMAS50 = import.meta.env.DEV 
   ? STRIPE_PAYMENT_LINK_XMAS50_TEST 
