@@ -1,5 +1,5 @@
 import { useState, useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter, Routes, Route, useSearchParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useSearchParams, useLocation } from 'react-router-dom';
 import { Home } from './pages/Home';
 import { PaymentModal } from './components/PaymentModal';
 import { AdviceModal } from './components/AdviceModal';
@@ -7,6 +7,7 @@ import { CookieBanner } from './components/CookieBanner';
 import { Skeleton } from './components/Skeleton';
 import { generateAdvice } from './utils/generateAdvice';
 import type { TradingAdvice } from './utils/generateAdvice';
+import { checkAndInitializeGA, trackPageView } from './utils/analytics';
 
 // Lazy load legal pages
 const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'));
@@ -14,11 +15,22 @@ const TermsOfService = lazy(() => import('./pages/TermsOfService'));
 const Disclaimer = lazy(() => import('./pages/Disclaimer'));
 
 const AppContent = () => {
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isAdviceModalOpen, setIsAdviceModalOpen] = useState(false);
   const [generatedAdvice, setGeneratedAdvice] = useState<TradingAdvice | null>(null);
   const [paymentError, setPaymentError] = useState<string | null>(null);
+
+  // Initialize GA on mount if consent was already given
+  useEffect(() => {
+    checkAndInitializeGA();
+  }, []);
+
+  // Track page views when route changes
+  useEffect(() => {
+    trackPageView(location.pathname + location.search);
+  }, [location]);
 
   // Handle payment return from Stripe
   useEffect(() => {

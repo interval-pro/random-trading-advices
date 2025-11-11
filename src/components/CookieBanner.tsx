@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { initializeGA } from '../utils/analytics';
 
 export const CookieBanner = () => {
   const [showBanner, setShowBanner] = useState(false);
@@ -19,7 +20,8 @@ export const CookieBanner = () => {
   const handleAccept = () => {
     localStorage.setItem('cookieConsent', 'accepted');
     setShowBanner(false);
-    // Here you would initialize analytics if needed
+    // Initialize Google Analytics when user accepts cookies
+    initializeGA();
   };
 
   const handleDecline = () => {
