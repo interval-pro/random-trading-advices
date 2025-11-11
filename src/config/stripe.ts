@@ -1,8 +1,8 @@
 // Stripe Payment Link Configuration
 // Automatically uses test URL for development (npm run dev) and production URL for builds (npm run build)
 
-const STRIPE_PAYMENT_LINK_TEST = 'https://buy.stripe.com/test_14AfZg2He7j76cN56iffy01';
-const STRIPE_PAYMENT_LINK_PROD = 'https://buy.stripe.com/eVqdR8chO46V58JaqCffy00';
+const STRIPE_PAYMENT_LINK_TEST = 'https://buy.stripe.com/test_6oU9AV4Frd7McEYgV2f7i00';
+const STRIPE_PAYMENT_LINK_PROD = 'https://buy.stripe.com/6oUfZjfk5aZE6gAbAIf7i01';
 
 // Use test URL in development mode, production URL in production builds
 // import.meta.env.DEV is true when running npm run dev
